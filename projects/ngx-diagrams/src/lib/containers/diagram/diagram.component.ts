@@ -367,8 +367,6 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit {
 			return;
 		}
 
-		this.diagramModel.clearSelection();
-
 		const selectedModel = this.getMouseElement(event);
 
 		// canvas selected
@@ -412,7 +410,7 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit {
 			}
 		} else {
 			// its some other element, probably want to move it
-			if (!event.shiftKey && !selectedModel.model.getSelected) {
+			if (!event.shiftKey && !selectedModel.model.getSelected()) {
 				this.diagramModel.clearSelection();
 			}
 			selectedModel.model.setSelected();
