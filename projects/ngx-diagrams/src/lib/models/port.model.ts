@@ -50,6 +50,14 @@ export class PortModel extends BaseModel<NodeModel> {
 		return this.x$.getValue();
 	}
 
+	getHeight() {
+		return this.height$.getValue();
+	}
+
+	getWidth() {
+		return this.width$.getValue();
+	}
+
 	getMaximumLinks(): number {
 		return this.maximumLinks;
 	}
@@ -103,12 +111,16 @@ export class PortModel extends BaseModel<NodeModel> {
 		const numberOfLinks: number = Object.keys(this.links$.getValue()).length;
 		if (this.maximumLinks === 1 && numberOfLinks >= 1) {
 			const linkToRemove = Object.values(this.links$.getValue())[0];
-			linkToRemove.destroy();
+			if (linkToRemove) {
+				linkToRemove.destroy();
+			}
 			return null;
 		} else if (numberOfLinks >= this.maximumLinks) {
 			// for the moment we will remove the first link by default
 			const linkToRemove = Object.values(this.links$.getValue())[0];
-			linkToRemove.destroy();
+			if (linkToRemove) {
+				linkToRemove.destroy();
+			}
 			return null;
 		}
 		return null;

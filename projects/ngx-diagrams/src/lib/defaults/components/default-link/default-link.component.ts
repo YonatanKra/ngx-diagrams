@@ -1,10 +1,12 @@
-import { Component, AfterViewInit, ChangeDetectorRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef, ViewChild, ViewContainerRef, OnInit } from '@angular/core';
 import { DefaultLinkModel } from '../../models/default-link.model';
 import { generateCurvePath } from '../../../utils/tool-kit.util';
 import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { PointModel } from '../../../models/point.model';
 import { LabelModel } from '../../../models/label.model';
 import { filter, takeUntil } from 'rxjs/operators';
+import { PathFinding, generateDynamicPath } from '../../../utils';
+import { first, last } from 'lodash';
 import { Coords } from '../../../interfaces';
 
 @Component({
@@ -12,16 +14,23 @@ import { Coords } from '../../../interfaces';
 	templateUrl: './default-link.component.html',
 	styleUrls: ['./default-link.component.scss']
 })
-export class DefaultLinkComponent extends DefaultLinkModel implements AfterViewInit {
+export class DefaultLinkComponent extends DefaultLinkModel implements AfterViewInit, OnInit {
 	@ViewChild('labelLayer', { read: ViewContainerRef, static: true }) labelLayer: ViewContainerRef;
 
 	_path$: BehaviorSubject<string> = new BehaviorSubject(null);
 	path$: Observable<string> = this._path$.asObservable();
 	points$: BehaviorSubject<PointModel[]> = new BehaviorSubject([]);
 	label$: Observable<LabelModel>;
+	pathFinding: PathFinding; // only set when smart routing is active
 
 	constructor(private cdRef: ChangeDetectorRef) {
 		super('ngdx-default-link');
+	}
+
+	ngOnInit() {
+		if (this.diagramEngine.isSmartRoutingEnabled()) {
+			this.pathFinding = this.diagramEngine.getPathfinding();
+		}
 	}
 
 	ngAfterViewInit() {
@@ -34,18 +43,39 @@ export class DefaultLinkComponent extends DefaultLinkModel implements AfterViewI
 			.subscribe(([firstPCoords, lastPCoords]) => {
 				const points = [firstPCoords, lastPCoords];
 
-				const isHorizontal = Math.abs(firstPCoords.x - lastPCoords.x) > Math.abs(firstPCoords.y - lastPCoords.y);
-				const xOrY = isHorizontal ? 'x' : 'y';
+				if (this.isSmartRoutingApplicable()) {
+					// first step: calculate a direct path between the points being linked
+					const directPathCoords = this.pathFinding.calculateDirectPath(first(points), last(points));
+					const routingMatrix = this.diagramEngine.getRoutingMatrix();
 
-				// draw the smoothing
-				// if the points are too close, just draw a straight line
-				let isStraight = false;
-				if (Math.abs(points[0][xOrY] - points[1][xOrY]) < 50) {
-					isStraight = true;
+					// now we need to extract, from the routing matrix, the very first walkable points
+					// so they can be used as origin and destination of the link to be created
+					const smartLink = this.pathFinding.calculateLinkStartEndCoords(routingMatrix, directPathCoords);
+
+					if (smartLink) {
+						const { start, end, pathToStart, pathToEnd } = smartLink;
+
+						// second step: calculate a path avoiding hitting other elements
+						const simplifiedPath = this.pathFinding.calculateDynamicPath(routingMatrix, start, end, pathToStart, pathToEnd);
+						const path = generateDynamicPath(simplifiedPath);
+						this._path$.next(path);
+					}
 				}
 
-				const path = generateCurvePath(firstPCoords, lastPCoords, isStraight ? 0 : this.curvyness);
-				this._path$.next(path);
+				if (!this._path$.getValue()) {
+					const isHorizontal = Math.abs(firstPCoords.x - lastPCoords.x) > Math.abs(firstPCoords.y - lastPCoords.y);
+					const xOrY = isHorizontal ? 'x' : 'y';
+
+					// draw the smoothing
+					// if the points are too close, just draw a straight line
+					let isStraight = false;
+					if (Math.abs(points[0][xOrY] - points[1][xOrY]) < 50) {
+						isStraight = true;
+					}
+
+					const path = generateCurvePath(firstPCoords, lastPCoords, isStraight ? 0 : this.curvyness);
+					this._path$.next(path);
+				}
 
 				if (!this.getTargetPort()) {
 					const danglingPoint = this.generatePoint(lastPCoords);
@@ -74,6 +104,28 @@ export class DefaultLinkComponent extends DefaultLinkModel implements AfterViewI
 				this.diagramEngine.generateWidgetForLabel(label, this.labelLayer);
 				this.cdRef.detectChanges();
 			});
+	}
+
+	/**
+	 * Smart routing is only applicable when all conditions below are true:
+	 * - smart routing is set to true on the engine
+	 * - current link is between two nodes (not between a node and an empty point)
+	 * - no custom points exist along the line
+	 */
+	isSmartRoutingApplicable(): boolean {
+		// const srcPort = this.getSourcePort();
+		// const trgtPort = this.getTargetPort();
+
+		if (!this.diagramEngine.isSmartRoutingEnabled()) {
+			return false;
+		}
+
+		// console.log(srcPort, trgtPort);
+		// if (srcPort === null || trgtPort === null) {
+		// 	return false;
+		// }
+
+		return true;
 	}
 
 	calcLabelIncline(firstPoint: Coords, secondPoint: Coords): number {

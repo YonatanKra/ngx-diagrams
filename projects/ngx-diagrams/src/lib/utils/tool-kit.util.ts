@@ -1,14 +1,13 @@
 // tslint:disable no-bitwise
-// import { ROUTING_SCALING_FACTOR } from './routing/path-finding.service';
-// import * as Path from 'paths-js/path';
 
 /**
  * Utility pathing and routing service
  */
-
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Coords } from '../interfaces/coords.interface';
+import { ROUTING_SCALING_FACTOR } from './path-finding.util';
+import * as Path from 'paths-js/path';
 
 export enum LOG_LEVEL {
 	'LOG',
@@ -124,11 +123,11 @@ export function generateCurvePath(firstPoint: Coords, lastPoint: Coords, curvy: 
     ${lastPoint.x - curvyX},${lastPoint.y - curvyY} ${lastPoint.x},${lastPoint.y}`;
 }
 
-// export function generateDynamicPath(pathCoords: number[][]) {
-//     let path = Path();
-//     path = path.moveto(pathCoords[0][0] * ROUTING_SCALING_FACTOR, pathCoords[0][1] * ROUTING_SCALING_FACTOR);
-//     pathCoords.slice(1).forEach(coords => {
-//         path = path.lineto(coords[0] * ROUTING_SCALING_FACTOR, coords[1] * ROUTING_SCALING_FACTOR);
-//     });
-//     return path.print();
-// }
+export function generateDynamicPath(pathCoords: number[][]) {
+	let path = Path();
+	path = path.moveto(pathCoords[0][0] * ROUTING_SCALING_FACTOR, pathCoords[0][1] * ROUTING_SCALING_FACTOR);
+	pathCoords.slice(1).forEach(coords => {
+		path = path.lineto(coords[0] * ROUTING_SCALING_FACTOR, coords[1] * ROUTING_SCALING_FACTOR);
+	});
+	return path.print();
+}

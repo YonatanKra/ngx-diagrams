@@ -39,6 +39,7 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() allowCanvasTranslation = true;
 	@Input() inverseZoom = true;
 	@Input() allowLooseLinks = true;
+	@Input() smartRouting = false;
 
 	@Output() actionStartedFiring: EventEmitter<BaseAction> = new EventEmitter();
 	@Output() actionStillFiring: EventEmitter<BaseAction> = new EventEmitter();
@@ -63,7 +64,7 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit, OnDestroy {
 	ngOnInit() {
 		if (this.diagramModel) {
 			this.diagramModel.getDiagramEngine().setCanvas(this.canvas.nativeElement);
-
+			this.diagramModel.getDiagramEngine().setSmartRoutingStatus(this.smartRouting);
 			this.nodes$ = this.diagramModel.selectNodes();
 			this.links$ = this.diagramModel.selectLinks();
 			this.nodesRendered$ = new BehaviorSubject(false);
@@ -362,6 +363,11 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit, OnDestroy {
 							port.updateCoords(portCoords);
 						});
 					}
+
+					if (this.diagramModel.getDiagramEngine().isSmartRoutingEnabled()) {
+						console.log('RECALCING THE ROUTING MATRIX!');
+						this.diagramModel.getDiagramEngine().calculateRoutingMatrix();
+					}
 				} else if (model.model instanceof PointModel) {
 					// we want points that are connected to ports, to not necessarily snap to grid
 					// this stuff needs to be pixel perfect, dont touch it
@@ -369,6 +375,10 @@ export class NgxDiagramComponent implements OnInit, AfterViewInit, OnDestroy {
 					model.model.setCoords({ x: model.initialX + newCoords.x, y: model.initialY + newCoords.y });
 				}
 			});
+
+			if (this.diagramModel.getDiagramEngine().isSmartRoutingEnabled()) {
+				this.diagramModel.getDiagramEngine().calculateCanvasMatrix();
+			}
 
 			this.fireAction();
 		} else if (action instanceof MoveCanvasAction) {
