@@ -1,8 +1,4 @@
-import { CanvasEngine, AbstractModelFactory, BaseModel } from '@projectstorm/react-canvas-core';
-
-export interface GenerateWidgetEvent<T extends BaseModel> {
-	model: T;
-}
+import { CanvasEngine, AbstractModelFactory, BaseModel, GenerateWidgetEvent } from '@projectstorm/react-canvas-core';
 
 /**
  * Further extends the AbstractFactory to add widget generation capability.
