@@ -1,45 +1,51 @@
-# [2.13.0](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.12.1...v2.13.0) (2019-12-25)
+## [2.13.2](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.13.1...v2.13.2) (2020-02-09)
 
+### Bug Fixes
+
+- **imports:** coords interface import ([7b649a7](https://github.com/DanielNetzer/ngx-diagrams/commit/7b649a7e69ad7b570d05cfe9f12842fe43098f00))
+
+## [2.13.1](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.13.0...v2.13.1) (2020-02-09)
+
+### Bug Fixes
+
+- **imports:** bad imports naming ([014f17a](https://github.com/DanielNetzer/ngx-diagrams/commit/014f17a4f3dbd8e4b166e072a67918a46c9760c3))
+
+# [2.13.0](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.12.1...v2.13.0) (2019-12-25)
 
 ### Features
 
-* **node model:** remove, update, add ports ([e334267](https://github.com/DanielNetzer/ngx-diagrams/commit/e3342674a5aad82d2e5e4c0839a989c2d371abb0))
+- **node model:** remove, update, add ports ([e334267](https://github.com/DanielNetzer/ngx-diagrams/commit/e3342674a5aad82d2e5e4c0839a989c2d371abb0))
 
 ## [2.12.1](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.12.0...v2.12.1) (2019-12-25)
 
-
 ### Bug Fixes
 
-* **base event:** null reference in options for event ([8a69a51](https://github.com/DanielNetzer/ngx-diagrams/commit/8a69a51f16a172514030c20f2c628fd5aec31206))
+- **base event:** null reference in options for event ([8a69a51](https://github.com/DanielNetzer/ngx-diagrams/commit/8a69a51f16a172514030c20f2c628fd5aec31206))
 
 # [2.12.0](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.11.2...v2.12.0) (2019-12-25)
 
-
 ### Features
 
-* **base entity:** passing options to constructor ([5cd07d9](https://github.com/DanielNetzer/ngx-diagrams/commit/5cd07d956528d4a26c708ab45ae8b933ad76ebda))
+- **base entity:** passing options to constructor ([5cd07d9](https://github.com/DanielNetzer/ngx-diagrams/commit/5cd07d956528d4a26c708ab45ae8b933ad76ebda))
 
 ## [2.11.2](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.11.1...v2.11.2) (2019-12-19)
 
-
 ### Bug Fixes
 
-* **on entity destroyed:** reverted the filtering ([2b92467](https://github.com/DanielNetzer/ngx-diagrams/commit/2b92467c29907c489b958abef84e47c1470a5265))
+- **on entity destroyed:** reverted the filtering ([2b92467](https://github.com/DanielNetzer/ngx-diagrams/commit/2b92467c29907c489b958abef84e47c1470a5265))
 
 ## [2.11.1](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.11.0...v2.11.1) (2019-12-19)
 
-
 ### Performance Improvements
 
-* **destroy options:** moved interface to a their right place ([c032bd5](https://github.com/DanielNetzer/ngx-diagrams/commit/c032bd5e0829d734ed125dd4c4d093a391a54132))
+- **destroy options:** moved interface to a their right place ([c032bd5](https://github.com/DanielNetzer/ngx-diagrams/commit/c032bd5e0829d734ed125dd4c4d093a391a54132))
 
 # [2.11.0](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.10.0...v2.11.0) (2019-12-19)
 
-
 ### Features
 
-* **destroy options:** allowing to pass options to destroy method ([06373bf](https://github.com/DanielNetzer/ngx-diagrams/commit/06373bf193f8fcf42b4156bdb651dae42698ec85))
-* **destroy-options:** emit property ([16a4a2e](https://github.com/DanielNetzer/ngx-diagrams/commit/16a4a2e7585b680aff81fb70bfae29cba55a8bad))
+- **destroy options:** allowing to pass options to destroy method ([06373bf](https://github.com/DanielNetzer/ngx-diagrams/commit/06373bf193f8fcf42b4156bdb651dae42698ec85))
+- **destroy-options:** emit property ([16a4a2e](https://github.com/DanielNetzer/ngx-diagrams/commit/16a4a2e7585b680aff81fb70bfae29cba55a8bad))
 
 # [2.10.0](https://github.com/DanielNetzer/ngx-diagrams/compare/v2.9.0...v2.10.0) (2019-11-21)
 
