@@ -22,7 +22,9 @@
     ],
     "paths": {
       "ngx-diagrams": [
-        "projects/ngx-diagrams/src/public-api"
+        "projects/ngx-diagrams/src/public-api",
+        "dist/ngx-diagrams/ngx-diagrams",
+        "dist/ngx-diagrams"
       ]
     }
   }
