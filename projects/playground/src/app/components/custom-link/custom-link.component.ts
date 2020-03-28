@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ChangeDetectorRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { DefaultLinkModel, PointModel, generateCurvePath, Coords, LabelModel } from 'ngx-diagrams';
+import { DefaultLinkModel, PointModel, generateCurvePath, Coords, LabelModel } from 'projects/ngx-diagrams/public-api';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

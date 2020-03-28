@@ -1,6 +1,6 @@
 import { ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory, Renderer2 } from '@angular/core';
 import { CustomLinkComponent } from './custom-link.component';
-import { AbstractLinkFactory, DefaultLinkModel, DiagramEngine } from 'ngx-diagrams';
+import { AbstractLinkFactory, DefaultLinkModel, DiagramEngine } from 'projects/ngx-diagrams/public-api';
 
 export class CustomLinkFactory extends AbstractLinkFactory<DefaultLinkModel> {
 	constructor(private resolver: ComponentFactoryResolver, private renderer: Renderer2) {

@@ -1,5 +1,12 @@
 import { Component, OnInit, ComponentFactoryResolver, Renderer2 } from '@angular/core';
-import { DiagramEngine, DefaultLinkModel, DiagramModel, DefaultNodeModel, DagreEngine, MoveItemsAction } from 'ngx-diagrams';
+import {
+	DiagramEngine,
+	DefaultLinkModel,
+	DiagramModel,
+	DefaultNodeModel,
+	DagreEngine,
+	MoveItemsAction
+} from 'projects/ngx-diagrams/public-api';
 import { CustomLinkFactory } from './components/custom-link/custom-link.factory';
 
 @Component({
@@ -9,4 +16,6 @@ import { CustomLinkFactory } from './components/custom-link/custom-link.factory'
 })
 export class AppComponent implements OnInit {
 	title = 'playground';
+
+	ngOnInit() {}
 }

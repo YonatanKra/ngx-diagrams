@@ -2,7 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MarkdownWrapperComponent } from './components/markdown-wrapper/markdown-wrapper.component';
-import { NgxDiagramsModule, DefaultPortModule, DefaultNodeModule, DefaultLinkModule, DefaultLabelModule, DagreEngine } from 'ngx-diagrams';
+import {
+	NgxDiagramsModule,
+	DefaultPortModule,
+	DefaultNodeModule,
+	DefaultLinkModule,
+	DefaultLabelModule,
+	DagreEngine
+} from 'projects/ngx-diagrams/public-api';
 import { CommonModule } from '@angular/common';
 import { CustomLinkComponent } from './components/custom-link/custom-link.component';
 
