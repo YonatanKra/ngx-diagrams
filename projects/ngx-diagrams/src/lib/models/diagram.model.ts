@@ -275,4 +275,21 @@ export class DiagramModel extends BaseEntity {
 		});
 		return models;
 	}
+
+	getGridSize() {
+		return this.gridSize$.getValue();
+	}
+
+	deserialize() {
+		return {
+			links: Object.values(this.getLinks()).map(link => link.deserialize()),
+			nodes: Object.values(this.getNodes()).map(node => node.deserialize()),
+			zoom: this.getZoomLevel(),
+			offsetX: this.getOffsetX(),
+			offsetY: this.getOffsetY(),
+			gridSize: this.getGridSize(),
+			maxZoomOut: this.getMaxZoomOut(),
+			maxZoomIn: this.getMaxZoomIn()
+		};
+	}
 }

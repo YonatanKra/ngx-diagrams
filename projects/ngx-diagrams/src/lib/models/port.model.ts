@@ -130,6 +130,20 @@ export class PortModel extends BaseModel<NodeModel> {
 		});
 	}
 
+	deserialize() {
+		return {
+			name: this.getName(),
+			maximumLinks: this.getMaximumLinks(),
+			linkType: this.getLinkType(),
+			x: this.getX(),
+			y: this.getY(),
+			width: this.getWidth(),
+			height: this.getHeight(),
+			canCreateLinks: this.getCanCreateLinks(),
+			...super.deserialize()
+		};
+	}
+
 	public createLinkModel(): LinkModel | null {
 		const numberOfLinks: number = Object.keys(this.links$.getValue()).length;
 		if (this.maximumLinks === 1 && numberOfLinks >= 1) {

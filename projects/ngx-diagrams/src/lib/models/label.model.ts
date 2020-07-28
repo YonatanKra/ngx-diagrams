@@ -40,4 +40,12 @@ export class LabelModel extends BaseModel<LinkModel> {
 	selectCoords(): Observable<Coords> {
 		return this.coords$.pipe(takeUntil(this.onEntityDestroy()), distinctUntilChanged());
 	}
+
+	deserialize() {
+		return {
+			coords: this._coords,
+			rotatation: this._rotation.getValue(),
+			...super.deserialize()
+		};
+	}
 }

@@ -17,6 +17,13 @@ export class BaseModel<X extends BaseEntity = BaseEntity> extends BaseEntity {
 		this._type = type;
 	}
 
+	deserialize() {
+		return {
+			id: this.id,
+			type: this._type
+		};
+	}
+
 	getParent(): X {
 		return this._parent.getValue();
 	}

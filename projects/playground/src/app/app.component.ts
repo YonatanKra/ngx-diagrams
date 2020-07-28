@@ -58,6 +58,8 @@ export class AppComponent implements OnInit {
 		this.diagramModel.addAll(node1, node2, node3, node4, link2);
 
 		this.diagramModel.getDiagramEngine().zoomToFit();
+
+		console.log(this.diagramModel.deserialize());
 	}
 
 	redistribute() {

@@ -10,6 +10,8 @@ import { ID, mapToArray } from '../utils/tool-kit.util';
 
 export class NodeModel<P extends PortModel = PortModel> extends BaseModel<DiagramModel> {
 	id: ID;
+
+	// TODO: figure out why is this here? :/
 	diagramEngine: DiagramEngine;
 
 	private readonly _extras: BehaviorSubject<{ [s: string]: any }>;
@@ -236,5 +238,15 @@ export class NodeModel<P extends PortModel = PortModel> extends BaseModel<Diagra
 	selectExtras<E = any>(selector?: (extra: E) => E[keyof E] | string | string[]) {
 		// TODO: impl selector
 		return this.extras$.pipe(takeUntil(this.onEntityDestroy()), distinctUntilChanged());
+	}
+
+	deserialize() {
+		return {
+			extras: this.getExtras(),
+			ports: Object.values(this.getPorts()).map((port: P) => port.deserialize()),
+			coords: this.getCoords(),
+			dimensions: this.getDimensions(),
+			...super.deserialize()
+		};
 	}
 }

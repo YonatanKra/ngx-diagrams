@@ -218,4 +218,15 @@ export class LinkModel extends BaseModel<DiagramModel> {
 		super.setLocked(locked);
 		this.points.forEach(point => point.setLocked(locked));
 	}
+
+	deserialize() {
+		return {
+			name: this.getName(),
+			sourcePort: this.getSourcePort().deserialize(),
+			targetPort: this.getTargetPort().deserialize(),
+			points: this.getPoints().map(point => point.deserialize()),
+			extras: this.extras,
+			...super.deserialize()
+		};
+	}
 }

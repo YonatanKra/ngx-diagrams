@@ -57,4 +57,11 @@ export class PointModel extends BaseModel<LinkModel> {
 			distinctUntilChanged()
 		);
 	}
+
+	deserialize() {
+		return {
+			coords: this.getCoords(),
+			...super.deserialize()
+		};
+	}
 }
